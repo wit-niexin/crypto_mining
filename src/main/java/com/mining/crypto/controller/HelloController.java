@@ -1,6 +1,6 @@
 package com.mining.crypto.controller;
 
-import org.springframework.http.ResponseEntity;
+import com.mining.crypto.response.ResponseBean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,14 +13,14 @@ import io.swagger.annotations.ApiOperation;
 public class HelloController {
 
     @GetMapping("/")
-    public String hello() {
-        return "Hello";
+    public ResponseBean<String> hello() {
+        return new ResponseBean<>("Hello");
     }
 
     @ApiImplicitParam(name = "name", value = "姓名", required = true)
     @ApiOperation(value = "问好")
     @GetMapping("/sayHi")
-    public ResponseEntity<String> sayHi(@RequestParam(value = "name") String name) {
-        return ResponseEntity.ok("Hi:" + name);
+    public ResponseBean<String> sayHi(@RequestParam(value = "name") String name) {
+        return new ResponseBean<>("Hi" + name);
     }
 }
