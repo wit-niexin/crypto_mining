@@ -7,18 +7,10 @@ import com.mining.crypto.vo.MiningRig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
-
 @Service
 public class MiningRigServiceImpl extends ServiceImpl<MiningRigMapper, MiningRig> implements IMiningRigService {
     @Autowired
     private MiningRigMapper miningRigMapper;
-
-    @Override
-    public List<String> getAll() {
-        return miningRigMapper.getAll();
-    }
 
     @Override
     public boolean updateStatusByName(String name, String status) {
@@ -27,13 +19,6 @@ public class MiningRigServiceImpl extends ServiceImpl<MiningRigMapper, MiningRig
             return false;
         }
         Integer rows = miningRigMapper.updateStatusByName(name,status);
-        //根据影响行数判断是否成功
-        return rows > 0;
-    }
-
-    @Override
-    public boolean addMiningRig(MiningRig miningRig) {
-        Integer rows = miningRigMapper.addMiningRig(miningRig);
         //根据影响行数判断是否成功
         return rows > 0;
     }

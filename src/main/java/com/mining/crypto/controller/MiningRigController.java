@@ -3,10 +3,8 @@ package com.mining.crypto.controller;
 import com.mining.crypto.response.ResponseBean;
 import com.mining.crypto.service.IMiningRigService;
 import com.mining.crypto.vo.MiningRig;
-import com.mining.crypto.vo.User;
 import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -22,8 +20,8 @@ public class MiningRigController {
 
     @ApiOperation(value = "获得全部矿机列表")
     @GetMapping("/getAll")
-    public ResponseBean<List> getAll() {
-        List<String> miningTables = miningRigService.getAll();
+    public ResponseBean<List<MiningRig>> getAll() {
+        List<MiningRig> miningTables = miningRigService.list();
         return new ResponseBean<>(ResponseBean.SUCCESS, miningTables, "success");
     }
 
@@ -44,7 +42,7 @@ public class MiningRigController {
     @PostMapping("/addMiningRig")
     public ResponseBean<Boolean> addMiningRig(@RequestBody MiningRig miningRig) {
         miningRig.setCommonValue("admin");
-        boolean result = miningRigService.addMiningRig(miningRig);
+        boolean result = miningRigService.save(miningRig);
         if (result) {
             return new ResponseBean<>(ResponseBean.SUCCESS, true, "矿机添加成功");
         } else {
