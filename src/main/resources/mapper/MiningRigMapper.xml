@@ -2,14 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mining.crypto.mapper.MiningRigMapper">
 
-    <select id="getAll">
-        select table_name from information_schema.tables where table_schema = 'mining'
-    </select>
-
-    <update id="updateStatusByName">
-        update mining_rig set status=#{status}, modify_date=now() where name=#{name}
-    </update>
-
     <insert id="addMiningRig">
         insert into mining_rig(id, name, model, status, price, commissioning_date, create_date, modifier, modify_date, del)
         values(#{id},#{name},#{model},#{status},#{price},#{commissioningDate},#{createDate},#{modifier},#{modifyDate},#{del})
