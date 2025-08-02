@@ -1,13 +1,12 @@
 package com.mining.crypto.controller;
 
 import java.util.Map;
-
 import com.mining.crypto.response.ResponseBean;
 import com.mining.crypto.service.IJwtTokenService;
 import com.mining.crypto.util.token.PayloadDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import cn.hutool.crypto.SecureUtil;
 import io.swagger.annotations.Api;
@@ -15,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(tags = "Token测试模块")
 @RestController
+@RequestMapping("/token")
 public class JwtTokenController {
 
     @Autowired
