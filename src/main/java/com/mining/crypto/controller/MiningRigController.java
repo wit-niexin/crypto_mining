@@ -15,21 +15,21 @@ import java.util.List;
 @RestController
 @RequestMapping("/mining_rig")
 public class MiningRigController {
+
     @Autowired
     private IMiningRigService miningRigService;
 
     @ApiOperation(value = "获得全部矿机列表")
     @GetMapping("/getAll")
-    public ResponseBean<List<MiningRig>> getAll() {
+    public ResponseBean<List> getAll() {
         List<MiningRig> miningTables = miningRigService.list();
-        return new ResponseBean<>(ResponseBean.SUCCESS, miningTables, "success");
+        return new ResponseBean<>(miningTables);
     }
 
     @ApiImplicitParams({@ApiImplicitParam(name = "name", value = "名称", required = true), @ApiImplicitParam(name = "status", value = "状态", required = true)})
     @ApiOperation(value = "修改矿机状态")
     @PostMapping("/updateStatus")
-    public ResponseBean<Boolean> updateStatus(@RequestParam(value = "name") String name, @RequestParam(value = "status") String status) {
-
+    public ResponseBean<Boolean> updateStatus(@RequestParam String name, @RequestParam String status) {
         boolean result = miningRigService.updateStatusByName(name, status);
         if (result) {
             return new ResponseBean<>(ResponseBean.SUCCESS, true, "矿机状态修改成功");
@@ -37,6 +37,7 @@ public class MiningRigController {
             return new ResponseBean<>(ResponseBean.FAIL, false, "矿机状态修改失败");
         }
     }
+
     @ApiImplicitParam(name = "miningRig", value = "新矿机", required = true, dataType = "MiningRig", paramType = "body")
     @ApiOperation(value = "新增矿机")
     @PostMapping("/addMiningRig")

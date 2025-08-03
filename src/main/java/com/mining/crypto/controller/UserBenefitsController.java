@@ -20,11 +20,4 @@ public class UserBenefitsController {
     @Autowired
     private IUserBenefitsService userBenefitsService;
 
-    @ApiImplicitParam(name = "user", value = "新用户", required = true, dataType = "User", paramType = "body")
-    @ApiOperation(value = "用户注册")
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User user) {
-        user.setCommonValue("admin");
-        return ResponseEntity.ok(userService.save(user) ? "true" : "false");
-    }
 }

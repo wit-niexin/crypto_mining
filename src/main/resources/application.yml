@@ -17,7 +17,11 @@ spring:
     port: 6379
     password: cS5bXr9o
     timeout: 5000ms
-    
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
 knife4j:
   # 开启增强配置 
   enable: true
