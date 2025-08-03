@@ -9,32 +9,17 @@ public class ResponseBean<T> implements Serializable {
     public static final long serialVersionUID = 1L;
 
     /**
-     * Token错误
-     */
-    public static final int NO_LOGIN = -1;
-
-    /**
-     * 业务操作成功
+     * 服务正常
      */
     public static final int SUCCESS = 200;
 
     /**
-     * 业务操作失败
+     * 服务异常
      */
     public static final int FAIL = 500;
 
     /**
-     * 验证码错误
-     */
-    public static final int INVALID_VALIDATE_CODE_ERROR = 478;
-
-    /**
-     * 用户名或或密码错误
-     */
-    public static final int USERNAME_NOT_FOUND_OR_PASSWORD_ERROR = 400;
-
-    /**
-     * 当前操作没有权限
+     * 权限异常
      */
     public static final int UNAUTHORIZED = 401;
 

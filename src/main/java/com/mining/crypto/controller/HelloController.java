@@ -25,4 +25,5 @@ public class HelloController {
     public ResponseBean<String> sayHi(@RequestParam(value = "name") String name) {
         return new ResponseBean<>("Hi" + name);
     }
+
 }

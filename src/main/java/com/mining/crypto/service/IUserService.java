@@ -5,4 +5,6 @@ import com.mining.crypto.vo.User;
 
 public interface IUserService extends IService<User> {
 
+    User login(String name, String password);
+
 }
