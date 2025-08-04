@@ -6,7 +6,7 @@ import java.util.Date;
 @Data
 public class UserBenefits extends BaseEntity {
 
-    private String username;
+    private String userName;
     private String miningRigName;
     private Date launchDate;
     private Integer daysRunning;

@@ -7,6 +7,15 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: test
     password: test
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      # 连接最大存活时间
+      max-lifetime: 1800000  # 30分钟
+      # 空闲连接超时时间（需小于 max-lifetime）
+      idle-timeout: 600000   # 10分钟
+      # 连接验证查询
+      connection-test-query: "SELECT 1"
 
   cache:
     type: redis
