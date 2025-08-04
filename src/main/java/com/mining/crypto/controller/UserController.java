@@ -36,7 +36,11 @@ public class UserController {
     @ApiImplicitParams({@ApiImplicitParam(name = "name", value = "用户名", required = true), @ApiImplicitParam(name = "password", value = "密码", required = true)})
     @ApiOperation(value = "用户登录")
     @PostMapping("/login")
-    public ResponseBean<User> updateStatus(@RequestParam String name, @RequestParam String password) {
+    public ResponseBean<User> login(@RequestParam String name, @RequestParam String password) {
+
+
+
+
         return new ResponseBean<>(userService.login(name, password));
     }
 }
