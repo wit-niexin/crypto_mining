@@ -11,7 +11,7 @@ public class ExceptionHandle {
 
     @ExceptionHandler(LoginErrorException.class)
     public ResponseBean<String> handleException(Exception e) {
-        return new ResponseBean<>(e, ResponseBean.USERNAME_NOT_FOUND_OR_PASSWORD_ERROR);
+        return new ResponseBean<>(e, ResponseBean.FAIL);
     }
 
 }
