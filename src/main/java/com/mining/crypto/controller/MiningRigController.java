@@ -30,12 +30,7 @@ public class MiningRigController {
     @ApiOperation(value = "修改矿机状态")
     @PostMapping("/updateStatus")
     public ResponseBean<Boolean> updateStatus(@RequestParam String name, @RequestParam String status) {
-        boolean result = miningRigService.updateStatusByName(name, status);
-        if (result) {
-            return new ResponseBean<>(ResponseBean.SUCCESS, true, "矿机状态修改成功");
-        } else {
-            return new ResponseBean<>(ResponseBean.FAIL, false, "矿机状态修改失败");
-        }
+        return new ResponseBean<>(miningRigService.updateStatusByName(name, status));
     }
 
     @ApiImplicitParam(name = "miningRig", value = "新矿机", required = true, dataType = "MiningRig", paramType = "body")
@@ -43,12 +38,7 @@ public class MiningRigController {
     @PostMapping("/addMiningRig")
     public ResponseBean<Boolean> addMiningRig(@RequestBody MiningRig miningRig) {
         miningRig.setCommonValue("admin");
-        boolean result = miningRigService.save(miningRig);
-        if (result) {
-            return new ResponseBean<>(ResponseBean.SUCCESS, true, "矿机添加成功");
-        } else {
-            return new ResponseBean<>(ResponseBean.FAIL, false, "矿机添加失败");
-        }
+        return new ResponseBean<>(miningRigService.save(miningRig));
     }
 
 }
