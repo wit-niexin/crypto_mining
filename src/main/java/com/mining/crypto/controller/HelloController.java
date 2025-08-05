@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(tags = "测试模块")
 @RestController
-@RequestMapping("/hello")
+@RequestMapping("/test")
 public class HelloController {
 
     @GetMapping("/")
@@ -22,7 +22,7 @@ public class HelloController {
     @ApiImplicitParam(name = "name", value = "姓名", required = true)
     @ApiOperation(value = "问好")
     @GetMapping("/sayHi")
-    public ResponseBean<String> sayHi(@RequestParam(value = "name") String name) {
+    public ResponseBean<String> sayHi(@RequestParam String name) {
         return new ResponseBean<>("Hi" + name);
     }
 

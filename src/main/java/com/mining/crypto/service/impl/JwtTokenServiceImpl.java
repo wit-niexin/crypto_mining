@@ -4,10 +4,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 import com.mining.crypto.service.IJwtTokenService;
 import com.mining.crypto.util.token.JWT;
 import com.mining.crypto.util.token.PayloadDto;
 import com.mining.crypto.util.token.TokenState;
+import com.mining.crypto.vo.User;
+import com.mining.crypto.vo.Role;
 import org.springframework.stereotype.Service;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
@@ -24,6 +28,10 @@ public class JwtTokenServiceImpl implements IJwtTokenService {
         return tokenString;
     }
 
+    public String generateToken(User user, String secret) {
+        return generateToken(getPayloadDto(user), secret);
+    }
+
     /**
      * 模拟生成用户数据
      */
@@ -37,6 +45,19 @@ public class JwtTokenServiceImpl implements IJwtTokenService {
                 .jti(UUID.randomUUID().toString())
                 .username("admin")
                 .authorities(CollUtil.toList("ADMIN"))
+                .build();
+    }
+
+    public PayloadDto getPayloadDto(User user) {
+        Date now = new Date();
+        Date exp = DateUtil.offsetSecond(now, 60 * 60);
+        return PayloadDto.builder()
+                .sub("default jwt")
+                .iat(now.getTime())
+                .exp(exp.getTime())
+                .jti(UUID.randomUUID().toString())
+                .username(user.getName())
+                .authorities(user.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
                 .build();
     }
 

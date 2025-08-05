@@ -1,9 +1,20 @@
 package com.mining.crypto.service;
 
 import com.mining.crypto.util.token.PayloadDto;
+import com.mining.crypto.vo.User;
 import java.util.Map;
 
 public interface IJwtTokenService {
+
+    /**
+     * 生成用户数据
+     */
+    PayloadDto getPayloadDto(User user);
+
+    /**
+     * 模拟生成用户数据
+     */
+    PayloadDto getDefaultPayloadDto();
 
     /**
      * 生成token
@@ -11,9 +22,9 @@ public interface IJwtTokenService {
     String generateToken(PayloadDto payload, String secret);
 
     /**
-     * 模拟生成用户数据
+     * 生成token
      */
-    PayloadDto getDefaultPayloadDto();
+    String generateToken(User user, String secret);
 
     /**
      * 验证token

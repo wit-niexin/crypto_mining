@@ -43,3 +43,6 @@ knife4j:
       username: test
       # Basic认证密码
       password: 123
+
+jwt:
+  secret: testjwt
