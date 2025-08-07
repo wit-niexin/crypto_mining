@@ -51,4 +51,24 @@
         WHERE u.del = 0
     </select>
 
+    <select id="selectAllUsersPage" resultMap="userRoleMap">
+        <include refid="selectUsersWithRole"/>
+        <where>
+            u.del = 0
+            <if test="name != null and name != ''">
+                AND u.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="status != null">
+                AND u.status = #{status}
+            </if>
+        </where>
+        ORDER BY u.create_date DESC
+    </select>
+
+    <insert id="insert" keyProperty="id">
+        INSERT INTO user
+        VALUES (#{id}, #{name}, #{legalName}, #{password}, #{avatar}, #{gender}, #{phone}, #{email}, #{regTime},
+                #{status}, #{createDate}, #{modifier}, #{modifyDate}, #{del})
+    </insert>
+
 </mapper>

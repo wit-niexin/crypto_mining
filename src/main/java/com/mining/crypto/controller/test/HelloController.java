@@ -1,4 +1,4 @@
-package com.mining.crypto.controller;
+package com.mining.crypto.controller.test;
 
 import com.mining.crypto.response.ResponseBean;
 import org.springframework.web.bind.annotation.GetMapping;

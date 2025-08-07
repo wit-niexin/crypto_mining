@@ -1,4 +1,4 @@
-package com.mining.crypto.controller;
+package com.mining.crypto.controller.test;
 
 import java.util.Map;
 import com.mining.crypto.response.ResponseBean;

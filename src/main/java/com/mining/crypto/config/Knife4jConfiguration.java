@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
@@ -13,20 +14,46 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 @EnableSwagger2WebMvc
 public class Knife4jConfiguration {
 
-    @Bean(value = "defaultApi2")
-    public Docket defaultApi2() {
-        Docket docket=new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(new ApiInfoBuilder()
-				.title("项目接口测试文档")
+    private ApiInfo apiInfo(String title) {
+        return new ApiInfoBuilder()
+                .title(title)
                 .description("# Knife4j RESTful APIs")
                 .termsOfServiceUrl("https://doc.xiaominfo.com/")
                 .version("1.0")
-                .build())
-                //分组名称
-                .groupName("功能接口")
+                .build();
+    }
+
+    @Bean
+    public Docket testApi() {
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo("测试接口"))
+                .groupName("测试模块")
                 .select()
-                //这里指定Controller扫描包路径
-                .apis(RequestHandlerSelectors.basePackage("com.mining.crypto.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.mining.crypto.controller.test"))
+                .paths(PathSelectors.any())
+                .build();
+        return docket;
+    }
+
+    @Bean
+    public Docket adminApi() {
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo("管理接口"))
+                .groupName("管理模块")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.mining.crypto.controller.admin"))
+                .paths(PathSelectors.any())
+                .build();
+        return docket;
+    }
+
+    @Bean
+    public Docket userApi() {
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo("用户接口"))
+                .groupName("用户模块")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.mining.crypto.controller.user"))
                 .paths(PathSelectors.any())
                 .build();
         return docket;

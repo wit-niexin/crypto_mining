@@ -1,4 +1,4 @@
-package com.mining.crypto.controller;
+package com.mining.crypto.controller.admin;
 
 import com.mining.crypto.response.ResponseBean;
 import com.mining.crypto.service.IWithdrawalService;
