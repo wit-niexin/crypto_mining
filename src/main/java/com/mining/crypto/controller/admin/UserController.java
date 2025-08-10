@@ -15,8 +15,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
-import java.util.List;
-
 @Api(tags = "用户管理模块")
 @RestController
 @RequestMapping("/user")
@@ -29,12 +27,6 @@ public class UserController {
 
     @Value("${jwt.secret}")
     private String jwtSecret;
-
-    @ApiOperation(value = "获得全部用户列表")
-    @GetMapping("/getAll")
-    public ResponseBean<List> getAll() {
-        return new ResponseBean<>(userService.getAllUsers());
-    }
 
     @ApiImplicitParams({@ApiImplicitParam(name = "current", value = "当前页", required = true),
                         @ApiImplicitParam(name = "size", value = "每页大小", required = true),
@@ -59,7 +51,7 @@ public class UserController {
 
     @ApiImplicitParams({@ApiImplicitParam(name = "name", value = "用户名", required = true), @ApiImplicitParam(name = "password", value = "密码", required = true)})
     @ApiOperation(value = "用户登录")
-    @PostMapping("/login")
+    @GetMapping("/login")
     public ResponseBean<UserInfo> login(@RequestParam String name, @RequestParam String password) {
         User user = userService.login(name, password);
         String token = jwtTokenService.generateToken(user, SecureUtil.md5(jwtSecret));

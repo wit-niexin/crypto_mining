@@ -17,6 +17,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public User login(String name, String password) {
         User user = baseMapper.selectUserByName(name);
-        if (user.getStatus() == 1) {
+        if (user == null) {
+            throw new LoginErrorException("该用户不存在");
+        } else if (user.getStatus() == 1) {
             throw new LoginErrorException("该用户已被禁用");
         } else if (!password.equals(user.getPassword())) {
             throw new LoginErrorException("用户名或者密码错误");
@@ -40,17 +43,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    @Cacheable(value = "users", key = "'allUsers'")
-    public List<User> getAllUsers() {
-        return baseMapper.selectAllUsers();
-    }
-
-    @Override
     public IPage<User> getAllUsersPage(long current, long size, String name, Integer status) {
         return baseMapper.selectAllUsersPage(new Page<>(current, size), name, status);
     }
 
-    @CacheEvict(value = "users", key = "'allUsers'")
+    @Override
     public boolean addUser(User user) {
         if (baseMapper.insert(user) != 1) {
             throw new SaveErrorException("用户保存失败");
@@ -72,12 +69,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return true;
     }
 
-    @CacheEvict(value = "users", key = "'allUsers'")
+    @Override
     public boolean updateUser(User user) {
         return baseMapper.updateById(user) > 0;
     }
 
-    @CacheEvict(value = "users", key = "'allUsers'")
+    @Override
     public boolean deleteUser(Long id) {
         return baseMapper.deleteById(id) > 0;
     }

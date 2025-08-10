@@ -9,8 +9,6 @@ public interface IUserService extends IService<User> {
 
     User login(String name, String password);
 
-    List<User> getAllUsers();
-
     IPage<User> getAllUsersPage(long current, long size, String name, Integer status);
 
     boolean addUser(User user);
