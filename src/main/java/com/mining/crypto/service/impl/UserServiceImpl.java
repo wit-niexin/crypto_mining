@@ -13,11 +13,8 @@ import com.mining.crypto.vo.Role;
 import com.mining.crypto.vo.User;
 import com.mining.crypto.vo.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,11 +69,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public boolean updateUser(User user) {
         return baseMapper.updateById(user) > 0;
-    }
-
-    @Override
-    public boolean deleteUser(Long id) {
-        return baseMapper.deleteById(id) > 0;
     }
 
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @Api(tags = "用户收益管理模块")
 @RestController
 @RequestMapping("/user_benefits")
-public class UserBenefitsController {
+public class A_UserBenefitsController {
 
     @Autowired
     private IUserBenefitsService userBenefitsService;

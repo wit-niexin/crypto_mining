@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.mining.crypto.service.IJwtTokenService;
 import com.mining.crypto.util.token.JWT;
 import com.mining.crypto.util.token.PayloadDto;
@@ -23,11 +23,13 @@ public class JwtTokenServiceImpl implements IJwtTokenService {
     /**
      * 生成token
      */
+    @Override
     public String generateToken(PayloadDto payloadDto, String secret) {
         String tokenString = JWT.generateTokenByHMAC(JSONUtil.toJsonStr(payloadDto), secret);
         return tokenString;
     }
 
+    @Override
     public String generateToken(User user, String secret) {
         return generateToken(getPayloadDto(user), secret);
     }
@@ -35,6 +37,7 @@ public class JwtTokenServiceImpl implements IJwtTokenService {
     /**
      * 模拟生成用户数据
      */
+    @Override
     public PayloadDto getDefaultPayloadDto() {
         Date now = new Date();
         Date exp = DateUtil.offsetSecond(now, 60 * 60);
@@ -48,6 +51,7 @@ public class JwtTokenServiceImpl implements IJwtTokenService {
                 .build();
     }
 
+    @Override
     public PayloadDto getPayloadDto(User user) {
         Date now = new Date();
         Date exp = DateUtil.offsetSecond(now, 60 * 60);
@@ -62,23 +66,31 @@ public class JwtTokenServiceImpl implements IJwtTokenService {
     }
 
     /**
-     * 验证token
+     * 验证token，返回验证结果
      */
-    public Map<String, String> verifyToken(String token, String secret) {
+    @Override
+    public Map<String, String> verifyTokenValid(String token, String secret) {
         Map<String, String> resultMap = new HashMap<String, String>();
-        String payload = JWT.verifyTokenByHMAC(token, secret);
-        if (payload == null) {
-            resultMap.put("state", TokenState.ERROR.toString());
+        PayloadDto payloadDto = verifyTokenData(token, secret);
+        if (!"default jwt".equals(payloadDto.getSub())) {
+            resultMap.put("state", TokenState.INVALID.toString());
+        } else if (payloadDto.getExp() < new Date().getTime()) {
+            resultMap.put("state", TokenState.EXPIRED.toString());
         } else {
-            PayloadDto payloadDto = JSONUtil.toBean(payload, PayloadDto.class);
-            if (!"default jwt".equals(payloadDto.getSub())) {
-                resultMap.put("state", TokenState.INVALID.toString());
-            } else if (payloadDto.getExp() < new Date().getTime()) {
-                resultMap.put("state", TokenState.EXPIRED.toString());
-            } else {
-                resultMap.put("state", TokenState.VALID.toString());
-            }
+            resultMap.put("state", TokenState.VALID.toString());
         }
         return resultMap;
+    }
+
+    /**
+     * 验证token，返回用户数据
+     */
+    @Override
+    public PayloadDto verifyTokenData(String token, String secret) {
+        String payload = JWT.verifyTokenByHMAC(token, secret);
+        if (StringUtils.isNotBlank(payload)) {
+            return JSONUtil.toBean(payload, PayloadDto.class);
+        }
+        return null;
     }
 }

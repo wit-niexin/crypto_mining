@@ -7,12 +7,12 @@ import java.util.Map;
 public interface IJwtTokenService {
 
     /**
-     * 生成用户数据
+     * 在生成token之前，构造用户数据
      */
     PayloadDto getPayloadDto(User user);
 
     /**
-     * 模拟生成用户数据
+     * 构造模拟用户数据
      */
     PayloadDto getDefaultPayloadDto();
 
@@ -27,7 +27,12 @@ public interface IJwtTokenService {
     String generateToken(User user, String secret);
 
     /**
-     * 验证token
+     * 验证token，返回验证结果
      */
-    Map<String, String> verifyToken(String token, String secret);
+    Map<String, String> verifyTokenValid(String token, String secret);
+
+    /**
+     * 验证token，返回用户数据
+     */
+    PayloadDto verifyTokenData(String token, String secret);
 }

@@ -2,4 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mining.crypto.mapper.MiningRigMapper">
 
+    <sql id="selectMiningRigs">
+        SELECT m.*
+        FROM mining_rig m
+    </sql>
+
+    <select id="selectAllMiningRigsPage" resultType="MiningRig">
+        <include refid="selectMiningRigs"/>
+        <where>
+            m.del = 0
+            <if test="name != null and name != ''">
+                AND m.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="status != null">
+                AND m.status = #{status}
+            </if>
+        </where>
+        ORDER BY m.create_date DESC
+    </select>
 </mapper>

@@ -36,7 +36,7 @@ public class JwtTokenController {
     @ApiOperation("验证token")
     @GetMapping(value = "/verifyToken")
     public ResponseBean<String> verifyToken(@RequestParam String token) {
-        Map<String, String> resultMap = jwtTokenService.verifyToken(token, SecureUtil.md5(jwtSecret));
+        Map<String, String> resultMap = jwtTokenService.verifyTokenValid(token, SecureUtil.md5(jwtSecret));
         return new ResponseBean<>(resultMap.get("state"));
     }
 }
