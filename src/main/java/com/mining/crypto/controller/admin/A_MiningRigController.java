@@ -21,8 +21,8 @@ public class A_MiningRigController {
 
     @ApiImplicitParams({@ApiImplicitParam(name = "current", value = "当前页", required = true),
                         @ApiImplicitParam(name = "size", value = "每页大小", required = true),
-                        @ApiImplicitParam(name = "name", value = "用户名", required = false),
-                        @ApiImplicitParam(name = "status", value = "状态", required = false)})
+                        @ApiImplicitParam(name = "name", value = "用户名"),
+                        @ApiImplicitParam(name = "status", value = "状态")})
     @ApiOperation(value = "获得分页矿机列表")
     @GetMapping("/getAllPage")
     public ResponseBean<IPage<MiningRig>> getAllPage(@RequestParam(defaultValue = "1") long current,

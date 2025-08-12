@@ -4,7 +4,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class UserBenefits extends BaseEntity {
+public class UserBenefit extends BaseEntity {
 
     private String userName;
     private String miningRigName;

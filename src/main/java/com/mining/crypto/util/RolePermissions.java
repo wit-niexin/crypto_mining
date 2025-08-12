@@ -11,7 +11,7 @@ public class RolePermissions {
         ROLE_PERMISSION_MAP.put("ADMIN", List.of("/mining_rig/getAll",
                                                  "/mining_rig/updateStatus",
                                                  "/mining_rig/addMiningRig",
-                                                 "/user_benefits/getAll",
+                                                 "/user_benefit/getAll",
                                                  "/user/getAllPage",
                                                  "/user/addUser"));
         ROLE_PERMISSION_MAP.put("USER", List.of(""));

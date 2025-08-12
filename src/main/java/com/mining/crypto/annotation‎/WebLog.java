@@ -1,4 +1,4 @@
-package com.mining.crypto.annotation‎;
+package com.mining.crypto.annotation;
 
 import java.lang.annotation.*;
 
