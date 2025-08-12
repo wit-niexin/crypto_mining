@@ -21,15 +21,13 @@ public class A_UserBenefitController {
 
     @ApiImplicitParams({@ApiImplicitParam(name = "current", value = "当前页", required = true),
                         @ApiImplicitParam(name = "size", value = "每页大小", required = true),
-                        @ApiImplicitParam(name = "name", value = "用户名"),
-                        @ApiImplicitParam(name = "status", value = "状态")})
+                        @ApiImplicitParam(name = "name", value = "用户名")})
     @ApiOperation(value = "获得分页收益列表")
     @GetMapping("/getAllPage")
     public ResponseBean<IPage<UserBenefit>> getAllPage(@RequestParam(defaultValue = "1") long current,
                                                        @RequestParam(defaultValue = "10") long size,
-                                                       @RequestParam(required = false) String name,
-                                                       @RequestParam(required = false) Integer status) {
-        return new ResponseBean<>(userBenefitService.getAllUserBenefitsPage(current, size, name, status));
+                                                       @RequestParam(required = false) String name) {
+        return new ResponseBean<>(userBenefitService.getAllUserBenefitsPage(current, size, name));
     }
 
 }

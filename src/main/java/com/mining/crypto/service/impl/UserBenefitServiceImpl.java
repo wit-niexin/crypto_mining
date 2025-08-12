@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class UserBenefitServiceImpl extends ServiceImpl<UserBenefitMapper, UserBenefit> implements IUserBenefitService {
 
     @Override
-    public IPage<UserBenefit> getAllUserBenefitsPage(long current, long size, String name, Integer status) {
-        return baseMapper.selectAllUserBenefitsPage(new Page<>(current, size), name, status);
+    public IPage<UserBenefit> getAllUserBenefitsPage(long current, long size, String name) {
+        return baseMapper.selectAllUserBenefitsPage(new Page<>(current, size), name);
     }
 }
