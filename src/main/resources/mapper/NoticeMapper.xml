@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mining.crypto.mapper.NoticeMapper">
+
+    <sql id="selectNotices">
+        SELECT n.*
+        FROM notice n
+    </sql>
+
+    <select id="selectAllNoticesPage" resultType="Notice">
+        <include refid="selectNotices"/>
+        <where>
+            n.del = 0
+            <if test="title != null and title != ''">
+                AND n.title LIKE CONCAT('%', #{title}, '%')
+            </if>
+            <if test="status != null">
+                AND n.status = #{status}
+            </if>
+        </where>
+        ORDER BY n.create_date DESC
+    </select>
+</mapper>

@@ -11,7 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
-@Api(tags = "提现管理模块")
+@Api(tags = "用户提现管理模块")
 @RestController
 @RequestMapping("/withdrawal")
 public class A_WithdrawalController {
