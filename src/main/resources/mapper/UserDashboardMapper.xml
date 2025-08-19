@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mining.crypto.mapper.UserDashboardMapper">
+
+    <sql id="selectUserDashboard">
+        SELECT u.*
+        FROM user_dashboard u
+    </sql>
+
+    <select id="selectByUserName" resultType="UserDashboard">
+        <include refid="selectUserDashboard"/>
+        WHERE u.user_name = #{user_name} and u.del = 0
+    </select>
+</mapper>

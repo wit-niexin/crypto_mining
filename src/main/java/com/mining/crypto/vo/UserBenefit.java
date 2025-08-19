@@ -9,6 +9,7 @@ public class UserBenefit extends BaseEntity {
     private String userName;
     private String miningRigName;
     private Date launchDate;
+    private Integer status;
     private Integer daysRunning;
     private Double dailyAverageReturn;
     private Double cumulativeReturn;
