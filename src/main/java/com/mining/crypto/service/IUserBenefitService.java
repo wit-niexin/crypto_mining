@@ -8,4 +8,6 @@ public interface IUserBenefitService extends IService<UserBenefit> {
 
     IPage<UserBenefit> getAllUserBenefitsPage(long current, long size, String name);
 
+    void incrDaysAndRefreshCumulative();
+
 }

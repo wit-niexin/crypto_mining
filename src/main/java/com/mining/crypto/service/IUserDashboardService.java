@@ -7,4 +7,6 @@ public interface IUserDashboardService extends IService<UserDashboard> {
 
     UserDashboard getUserDashboard(String name);
 
+    void refreshAllDashboard();
+
 }

@@ -49,5 +49,10 @@ knife4j:
       # Basic认证密码
       password: 123
 
+# jwt密钥
 jwt:
   secret: testjwt
+
+# 开启定时任务
+schedule:
+  enabled: true
