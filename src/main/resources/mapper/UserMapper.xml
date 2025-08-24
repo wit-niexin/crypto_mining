@@ -12,6 +12,7 @@
         <result column="email" property="email"/>
         <result column="reg_time" property="regTime"/>
         <result column="status" property="status"/>
+        <result column="uid" property="uid"/>
         <result column="create_date" property="createDate"/>
         <result column="modifier" property="modifier"/>
         <result column="modify_date" property="modifyDate"/>
@@ -68,7 +69,7 @@
     <insert id="insert" keyProperty="id">
         INSERT INTO user
         VALUES (#{id}, #{name}, #{legalName}, #{password}, #{avatar}, #{gender}, #{phone}, #{email}, #{regTime},
-                #{status}, #{createDate}, #{modifier}, #{modifyDate}, #{del})
+                #{status}, #{uid}, #{createDate}, #{modifier}, #{modifyDate}, #{del})
     </insert>
 
 </mapper>

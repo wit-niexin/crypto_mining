@@ -18,7 +18,7 @@ public class U_DashboardController {
 
     @ApiOperation(value = "获得用户看板数据")
     @GetMapping("/getUserDashboard")
-    public ResponseBean<UserDashboard> getUserDashboard(String name) {
+    public ResponseBean<UserDashboard> getUserDashboard(@RequestParam String name) {
         return new ResponseBean<>(userDashboardService.getUserDashboard(name));
     }
 

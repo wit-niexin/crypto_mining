@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mining.crypto.mapper.UserWalletMapper">
+
+    <sql id="selectUserWallet">
+        SELECT u.*
+        FROM user_wallet u
+    </sql>
+
+    <select id="selectByNameAndStatus" resultType="UserWallet">
+        <include refid="selectUserWallet"/>
+        <where>
+            u.del = 0
+            <if test="name != null and name != ''">
+                AND u.username = #{name}
+            </if>
+            <if test="status != null and status != ''">
+                AND u.status = #{status}
+            </if>
+        </where>
+        ORDER BY u.time DESC
+    </select>
+
+</mapper>

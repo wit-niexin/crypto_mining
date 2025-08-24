@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 /**
  * 每日凌晨 1 点刷新用户数据
  */
@@ -24,6 +26,8 @@ public class UserBenefitDailyJob {
     @Scheduled(cron = "0 0 1 * * ?")
     public void run() {
         userBenefitService.incrDaysAndRefreshCumulative();
+        userBenefitService.pushDailyReturnToWallet(LocalDate.now());
         userDashboardService.refreshAllDashboard();
+
     }
 }
