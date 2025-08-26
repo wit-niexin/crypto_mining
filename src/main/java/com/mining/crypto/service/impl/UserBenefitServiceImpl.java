@@ -1,7 +1,9 @@
 package com.mining.crypto.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.NumberUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -14,8 +16,6 @@ import com.mining.crypto.vo.UserWallet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -37,33 +37,43 @@ public class UserBenefitServiceImpl extends ServiceImpl<UserBenefitMapper, UserB
     public void incrDaysAndRefreshCumulative() {
         LambdaUpdateWrapper<UserBenefit> uw = new LambdaUpdateWrapper<>();
         uw.eq(UserBenefit::getDel, 0)
-          .setSql("days_running = days_running + 1")
-          .setSql("cumulative_return = days_running * daily_average_return")
-          .setSql("modify_date = NOW()");
+                .setSql("days_running = days_running + 1")
+                .setSql("cumulative_return = days_running * daily_average_return")
+                .setSql("modify_date = NOW()");
         this.update(uw);
     }
 
     @Override
-    public void pushDailyReturnToWallet(LocalDate localDate) {
-        String day = localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        List<Map<String, Object>> list = baseMapper.sumDailyReturnByDate(day);
+    public void pushDailyReturnToWallet(Date date) {
+        String day = DateUtil.format(date, "yyyy-MM-dd");
+        List<Map<String, Object>> map = baseMapper.sumDailyReturnByDate(day);
 
-        if (CollUtil.isEmpty(list)) {
+        if (CollUtil.isEmpty(map)) {
             return;
         }
-
-        // 构造新记录
-        List<UserWallet> toSave = list.stream()
+        List<UserWallet> toSave = map.stream()
                 .map(m -> {
                     UserWallet w = new UserWallet();
                     w.setUsername((String) m.get("userName"));
                     w.setMoney(NumberUtil.round((Double) m.get("sumDailyReturn"), 8).doubleValue());
                     w.setStatus(0);
-                    w.setTime(new Date());
+                    w.setTime(date);
                     w.setCommonValue("admin");
                     return w;
                 })
                 .collect(Collectors.toList());
+
+        Date begin = DateUtil.beginOfDay(date);
+        Date end = DateUtil.endOfDay(date);
+        List<String> userNames = toSave.stream()
+                .map(UserWallet::getUsername)
+                .collect(Collectors.toList());
+
+        userWalletMapper.delete(
+                new QueryWrapper<UserWallet>()
+                        .in("username", userNames)
+                        .between("time", begin, end)
+        );
 
         userWalletMapper.insert(toSave);
     }

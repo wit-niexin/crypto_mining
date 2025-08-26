@@ -5,8 +5,7 @@ import com.mining.crypto.service.IUserDashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * 每日凌晨 1 点刷新用户数据
@@ -26,7 +25,7 @@ public class UserBenefitDailyJob {
     @Scheduled(cron = "0 0 1 * * ?")
     public void run() {
         userBenefitService.incrDaysAndRefreshCumulative();
-        userBenefitService.pushDailyReturnToWallet(LocalDate.now());
+        userBenefitService.pushDailyReturnToWallet(new Date());
         userDashboardService.refreshAllDashboard();
 
     }

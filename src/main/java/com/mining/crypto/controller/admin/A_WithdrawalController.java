@@ -36,8 +36,7 @@ public class A_WithdrawalController {
     @ApiOperation(value = "更新申请状态")
     @PostMapping("/updateWithdrawal")
     public ResponseBean<Boolean> updateWithdrawal(@RequestBody Withdrawal withdrawal) {
-        withdrawal.setCommonValue("admin");
-        return new ResponseBean<>(withdrawalService.updateById(withdrawal));
+        return new ResponseBean<>(withdrawalService.updateStatus(withdrawal));
     }
 
 }

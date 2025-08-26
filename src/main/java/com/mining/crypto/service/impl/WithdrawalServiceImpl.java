@@ -8,6 +8,8 @@ import com.mining.crypto.service.IWithdrawalService;
 import com.mining.crypto.vo.Withdrawal;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class WithdrawalServiceImpl extends ServiceImpl<WithdrawalMapper, Withdrawal> implements IWithdrawalService {
 
@@ -16,4 +18,10 @@ public class WithdrawalServiceImpl extends ServiceImpl<WithdrawalMapper, Withdra
         return baseMapper.selectAllWithdrawalsPage(new Page<>(current, size), name, status);
     }
 
+    @Override
+    public boolean updateStatus(Withdrawal withdrawal) {
+        withdrawal.setApprovalTime(new Date());
+        withdrawal.setCommonValue("admin");
+        return this.updateById(withdrawal);
+    }
 }

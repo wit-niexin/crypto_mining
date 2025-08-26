@@ -8,4 +8,6 @@ public interface IWithdrawalService extends IService<Withdrawal> {
 
     IPage<Withdrawal> getAllWithdrawalsPage(long current, long size, String name, Integer status);
 
+    boolean updateStatus(Withdrawal withdrawal);
+
 }

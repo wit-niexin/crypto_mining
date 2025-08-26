@@ -34,9 +34,9 @@ public class U_UserWalletController {
     @ApiImplicitParam(name = "userWallet", value = "钱包余额变动", required = true, dataType = "UserWallet", paramType = "body")
     @ApiOperation(value = "新增钱包数据")
     @PostMapping("/addUserWallet")
-    public ResponseBean<String> addUserWallet(@RequestBody UserWallet userWallet) {
+    public ResponseBean<Boolean> addUserWallet(@RequestBody UserWallet userWallet) {
         userWallet.setCommonValue("admin");
-        return new ResponseBean<>(userWalletService.save(userWallet) ? "true" : "false");
+        return new ResponseBean<>(userWalletService.save(userWallet));
     }
 
 }

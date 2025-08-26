@@ -12,6 +12,7 @@ import com.mining.crypto.util.token.PayloadDto;
 import com.mining.crypto.util.token.TokenState;
 import com.mining.crypto.vo.User;
 import com.mining.crypto.vo.Role;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
@@ -19,6 +20,9 @@ import cn.hutool.json.JSONUtil;
 
 @Service
 public class JwtTokenServiceImpl implements IJwtTokenService {
+
+    @Value("${jwt.time}")
+    private String jwtTime;
 
     /**
      * 生成token
@@ -40,7 +44,7 @@ public class JwtTokenServiceImpl implements IJwtTokenService {
     @Override
     public PayloadDto getDefaultPayloadDto() {
         Date now = new Date();
-        Date exp = DateUtil.offsetSecond(now, 60 * 60);
+        Date exp = DateUtil.offsetSecond(now, Integer.parseInt(jwtTime));
         return PayloadDto.builder()
                 .sub("default jwt")
                 .iat(now.getTime())

@@ -3,7 +3,8 @@ package com.mining.crypto.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mining.crypto.vo.UserBenefit;
-import java.time.LocalDate;
+
+import java.util.Date;
 
 public interface IUserBenefitService extends IService<UserBenefit> {
 
@@ -11,6 +12,6 @@ public interface IUserBenefitService extends IService<UserBenefit> {
 
     void incrDaysAndRefreshCumulative();
 
-    void pushDailyReturnToWallet(LocalDate localDate);
+    void pushDailyReturnToWallet(Date date);
 
 }

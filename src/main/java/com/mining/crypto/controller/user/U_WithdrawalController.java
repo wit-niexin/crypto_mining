@@ -9,6 +9,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
+import java.util.Date;
+
 @Api(tags = "个人提现模块")
 @RestController
 @RequestMapping("/withdrawal")
@@ -21,6 +23,8 @@ public class U_WithdrawalController {
     @ApiOperation(value = "新增提现申请")
     @PostMapping("/addWithdrawal")
     public ResponseBean<Boolean> addWithdrawal(@RequestBody Withdrawal withdrawal) {
+        withdrawal.setApplicationTime(new Date());
+        withdrawal.setStatus(0);
         withdrawal.setCommonValue("admin");
         return new ResponseBean<>(withdrawalService.save(withdrawal));
     }

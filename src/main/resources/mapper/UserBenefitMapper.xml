@@ -16,8 +16,8 @@
         <include refid="selectUserBenefits"/>
         <where>
             u.del = 0
-            <if test="user_name != null and user_name != ''">
-                AND u.user_name LIKE CONCAT('%', #{user_name}, '%')
+            <if test="name != null and name != ''">
+                AND u.user_name LIKE CONCAT('%', #{name}, '%')
             </if>
         </where>
         ORDER BY u.create_date DESC

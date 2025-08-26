@@ -52,6 +52,7 @@ knife4j:
 # jwt密钥
 jwt:
   secret: testjwt
+  time: 7200
 
 # 开启定时任务
 schedule:

@@ -16,6 +16,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 拦截指定路径及其下属路径
         registry.addInterceptor(tokenInterceptor)
+                .addPathPatterns("/dashboard/**")       // 拦截 /dashboard 及其所有子路径
                 .addPathPatterns("/withdrawal/**")      // 拦截 /withdrawal 及其所有子路径
                 .addPathPatterns("/user_benefit/**")    // 拦截 /user_benefit 及其所有子路径
                 .addPathPatterns("/mining_rig/**")      // 拦截 /mining_rig 及其所有子路径
