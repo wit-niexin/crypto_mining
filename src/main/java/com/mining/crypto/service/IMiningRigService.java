@@ -7,4 +7,6 @@ import com.mining.crypto.vo.MiningRig;
 public interface IMiningRigService extends IService<MiningRig> {
 
     IPage<MiningRig> getAllMiningRigsPage(long current, long size, String name, Integer status);
+
+    int getMiningRigsCount();
 }

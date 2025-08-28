@@ -1,5 +1,6 @@
 package com.mining.crypto.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -23,5 +24,10 @@ public class WithdrawalServiceImpl extends ServiceImpl<WithdrawalMapper, Withdra
         withdrawal.setApprovalTime(new Date());
         withdrawal.setCommonValue("admin");
         return this.updateById(withdrawal);
+    }
+
+    @Override
+    public int countWaitingApprovals() {
+        return (int) count(new LambdaQueryWrapper<Withdrawal>().eq(Withdrawal::getDel, 0).eq(Withdrawal::getStatus, 0));
     }
 }

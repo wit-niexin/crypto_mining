@@ -10,9 +10,9 @@ public class AdminDashboard implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-    public Long totalUsers;
-    public Long totalMiners;
-    public Long todayEarnings;
-    public Long pendingWithdrawals;
+    public Integer totalUsers;
+    public Integer totalMiners;
+    public Double todayEarnings;
+    public Integer pendingWithdrawals;
 
 }

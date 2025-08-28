@@ -10,6 +10,8 @@ public interface IUserService extends IService<User> {
 
     IPage<User> getAllUsersPage(long current, long size, String name, Integer status);
 
+    int getUsersCount();
+
     boolean addUser(User user);
 
     boolean updateUser(User user);

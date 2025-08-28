@@ -71,4 +71,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return baseMapper.updateById(user) > 0;
     }
 
+    @Override
+    public int getUsersCount() {
+        return baseMapper.countUsersNotAdmin();
+    }
 }

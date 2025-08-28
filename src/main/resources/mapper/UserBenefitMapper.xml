@@ -23,6 +23,19 @@
         ORDER BY u.create_date DESC
     </select>
 
+    <select id="selectAllUserBenefitsWithLegalNamePage" resultType="UserBenefitVO">
+        SELECT b.*, u.legal_name AS userLegalName
+        FROM user_benefit b
+        LEFT JOIN user u ON b.user_name = u.name
+        <where>
+            u.del = 0
+            <if test="name != null and name != ''">
+                AND u.legal_name LIKE CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+        ORDER BY b.launch_date DESC
+    </select>
+
     <select id="sumDailyReturnByDate" resultMap="sumResultMap">
         SELECT user_name AS userName,
                SUM(daily_average_return) AS sumDailyReturn

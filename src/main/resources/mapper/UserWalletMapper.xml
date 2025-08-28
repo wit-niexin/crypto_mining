@@ -21,4 +21,12 @@
         ORDER BY u.time DESC
     </select>
 
+    <select id="sumInMoneyByDate" resultType="double">
+        SELECT COALESCE(SUM(money), 0)
+        FROM user_wallet
+        WHERE del = 0
+          AND status = 0
+          AND time BETWEEN #{start} AND #{end}
+    </select>
+
 </mapper>

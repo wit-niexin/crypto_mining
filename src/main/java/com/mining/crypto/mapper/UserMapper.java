@@ -6,6 +6,8 @@ import com.mining.crypto.vo.User;
 
 public interface UserMapper extends BaseMapper<User> {
 
+    int countUsersNotAdmin();
+
     User selectUserByName(String name);
 
     IPage<User> selectAllUsersPage(IPage<User> page, String name, Integer status);

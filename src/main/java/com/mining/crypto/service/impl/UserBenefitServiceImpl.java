@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mining.crypto.mapper.UserBenefitMapper;
 import com.mining.crypto.mapper.UserWalletMapper;
+import com.mining.crypto.response.UserBenefitVO;
 import com.mining.crypto.service.IUserBenefitService;
 import com.mining.crypto.vo.UserBenefit;
 import com.mining.crypto.vo.UserWallet;
@@ -31,6 +32,11 @@ public class UserBenefitServiceImpl extends ServiceImpl<UserBenefitMapper, UserB
     @Override
     public IPage<UserBenefit> getAllUserBenefitsPage(long current, long size, String name) {
         return baseMapper.selectAllUserBenefitsPage(new Page<>(current, size), name);
+    }
+
+    @Override
+    public IPage<UserBenefitVO> getAllUserBenefitsWithLegalNamePage(long current, long size, String name) {
+        return baseMapper.selectAllUserBenefitsWithLegalNamePage(new Page<>(current, size), name);
     }
 
     @Override

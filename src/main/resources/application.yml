@@ -32,7 +32,7 @@ spring:
     time-zone: GMT+8
 
 mybatis-plus:
-  type-aliases-package: com.mining.crypto.vo
+  type-aliases-package: com.mining.crypto.vo, com.mining.crypto.response
   configuration:
     map-underscore-to-camel-case: true
 

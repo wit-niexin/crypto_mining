@@ -10,4 +10,6 @@ public interface IWithdrawalService extends IService<Withdrawal> {
 
     boolean updateStatus(Withdrawal withdrawal);
 
+    int countWaitingApprovals();
+
 }

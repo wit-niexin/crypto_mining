@@ -1,5 +1,6 @@
 package com.mining.crypto.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -14,6 +15,11 @@ public class MiningRigServiceImpl extends ServiceImpl<MiningRigMapper, MiningRig
     @Override
     public IPage<MiningRig> getAllMiningRigsPage(long current, long size, String name, Integer status) {
         return baseMapper.selectAllMiningRigsPage(new Page<>(current, size), name, status);
+    }
+
+    @Override
+    public int getMiningRigsCount() {
+        return (int) count(new LambdaQueryWrapper<MiningRig>().eq(MiningRig::getDel, 0));
     }
 }
 
