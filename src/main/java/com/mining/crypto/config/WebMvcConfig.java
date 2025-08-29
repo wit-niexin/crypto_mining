@@ -1,16 +1,30 @@
 package com.mining.crypto.config;
 
 import com.mining.crypto.interceptor.TokenInterceptor;
+import com.mining.crypto.resolver.DecryptArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import java.util.List;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
     private TokenInterceptor tokenInterceptor;
+
+    @Bean
+    public DecryptArgumentResolver decryptArgumentResolver() {
+        return new DecryptArgumentResolver();
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(decryptArgumentResolver());
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

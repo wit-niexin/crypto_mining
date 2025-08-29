@@ -1,6 +1,7 @@
 package com.mining.crypto.controller.user;
 
 import cn.hutool.crypto.SecureUtil;
+import com.mining.crypto.annotation.Decrypt;
 import com.mining.crypto.response.ResponseBean;
 import com.mining.crypto.response.UserInfo;
 import com.mining.crypto.service.IJwtTokenService;
@@ -30,7 +31,7 @@ public class U_UserController {
     @ApiImplicitParams({@ApiImplicitParam(name = "name", value = "用户名", required = true), @ApiImplicitParam(name = "password", value = "密码", required = true)})
     @ApiOperation(value = "用户登录")
     @GetMapping("/login")
-    public ResponseBean<UserInfo> login(@RequestParam String name, @RequestParam String password) {
+    public ResponseBean<UserInfo> login(@RequestParam String name, @Decrypt String password) {
         User user = userService.login(name, password);
         String token = jwtTokenService.generateToken(user, SecureUtil.md5(jwtSecret));
         return new ResponseBean<>(new UserInfo(user, token));

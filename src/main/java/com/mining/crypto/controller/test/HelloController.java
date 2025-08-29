@@ -1,5 +1,6 @@
 package com.mining.crypto.controller.test;
 
+import com.mining.crypto.annotation.Decrypt;
 import com.mining.crypto.response.ResponseBean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,13 @@ public class HelloController {
     @GetMapping("/sayHi")
     public ResponseBean<String> sayHi(@RequestParam String name) {
         return new ResponseBean<>("Hi" + name);
+    }
+
+    @ApiImplicitParam(name = "password", value = "密码", required = true)
+    @ApiOperation(value = "解密")
+    @GetMapping("/password")
+    public ResponseBean<String> dec(@Decrypt String password) {
+        return new ResponseBean<>(password);
     }
 
 }
