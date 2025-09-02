@@ -1,5 +1,6 @@
 package com.mining.crypto.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -9,6 +10,7 @@ import com.mining.crypto.exception.SaveErrorException;
 import com.mining.crypto.mapper.UserMapper;
 import com.mining.crypto.mapper.UserRoleMapper;
 import com.mining.crypto.service.IUserService;
+import com.mining.crypto.util.UserContext;
 import com.mining.crypto.vo.Role;
 import com.mining.crypto.vo.User;
 import com.mining.crypto.vo.UserRole;
@@ -67,12 +69,30 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public boolean updateUser(User user) {
-        return baseMapper.updateById(user) > 0;
+    public User updateUser(User user) {
+        baseMapper.updateById(user);
+        return baseMapper.selectUserByName(user.getName());
     }
 
     @Override
     public int getUsersCount() {
         return baseMapper.countUsersNotAdmin();
+    }
+
+    @Override
+    public int changePassword(String name, String oldPassword, String newPassword) {
+        User user = baseMapper.selectUserByName(name);
+        if (user == null) {
+            throw new LoginErrorException("该用户不存在");
+        } else {
+            if (!user.getPassword().equals(oldPassword)) {
+                throw new LoginErrorException("旧密码错误");
+            }
+            User tmpuser = new User();
+            tmpuser.setId(user.getId());
+            tmpuser.setPassword(newPassword);
+            tmpuser.setCommonValue(UserContext.getUsername());
+            return baseMapper.updateById(tmpuser);
+        }
     }
 }

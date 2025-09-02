@@ -82,6 +82,7 @@ public class JwtTokenServiceImpl implements IJwtTokenService {
             resultMap.put("state", TokenState.EXPIRED.toString());
         } else {
             resultMap.put("state", TokenState.VALID.toString());
+            resultMap.put("username", payloadDto.getUsername());
         }
         return resultMap;
     }

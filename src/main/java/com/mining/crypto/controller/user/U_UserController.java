@@ -6,6 +6,7 @@ import com.mining.crypto.response.ResponseBean;
 import com.mining.crypto.response.UserInfo;
 import com.mining.crypto.service.IJwtTokenService;
 import com.mining.crypto.service.IUserService;
+import com.mining.crypto.util.UserContext;
 import com.mining.crypto.vo.User;
 import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,19 @@ public class U_UserController {
     @ApiImplicitParam(name = "user", value = "用户", required = true, dataType = "User", paramType = "body")
     @ApiOperation(value = "修改用户")
     @PostMapping("/updateUser")
-    public ResponseBean<String> updateUser(@RequestBody User user) {
-        user.setCommonValue("admin");
-        return new ResponseBean<>(userService.updateUser(user) ? "true" : "false");
+    public ResponseBean<UserInfo> updateUser(@RequestBody User user) {
+        user.setCommonValue(UserContext.getUsername());
+        User newuser = userService.updateUser(user);
+        String token = jwtTokenService.generateToken(newuser, SecureUtil.md5(jwtSecret));
+        return new ResponseBean<>(new UserInfo(newuser, token));
+    }
+
+    @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "用户ID", required = true),
+                        @ApiImplicitParam(name = "oldPassword", value = "旧密码", required = true),
+                        @ApiImplicitParam(name = "newPassword", value = "新密码", required = true)})
+    @ApiOperation(value = "用户修改密码")
+    @PostMapping("/changePassword")
+    public ResponseBean<Boolean> changePassword(@RequestParam String name, @Decrypt("oldPassword") String oldPassword, @Decrypt("newPassword") String newPassword) {
+        return new ResponseBean<>(userService.changePassword(name, oldPassword, newPassword)>0);
     }
 }

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.mining.crypto.exception.TokenErrorException;
 import com.mining.crypto.service.IJwtTokenService;
 import com.mining.crypto.util.RolePermissions;
+import com.mining.crypto.util.UserContext;
 import com.mining.crypto.util.token.TokenState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +41,7 @@ public class TokenInterceptor implements HandlerInterceptor {
             if (!TokenState.VALID.toString().equals(status)) {
                 throw new TokenErrorException(status);
             }
+            UserContext.setUsername(resultMap.get("username"));
         }
         return true;
     }

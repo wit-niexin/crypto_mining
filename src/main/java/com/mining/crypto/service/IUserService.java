@@ -14,6 +14,8 @@ public interface IUserService extends IService<User> {
 
     boolean addUser(User user);
 
-    boolean updateUser(User user);
+    int changePassword(String name, String oldPassword, String newPassword);
+
+    User updateUser(User user);
 
 }
