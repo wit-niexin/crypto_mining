@@ -16,12 +16,7 @@ public class UserDashboardImpl extends ServiceImpl<UserDashboardMapper, UserDash
     }
 
     public void refreshAllDashboard() {
-        LambdaUpdateWrapper<UserDashboard> uw = new LambdaUpdateWrapper<>();
-        uw.eq(UserDashboard::getDel, 0)
-          .setSql("total_profit   = total_profit   + today_profit")
-          .setSql("wallet_balance = wallet_balance + today_profit")
-          .setSql("modify_date    = NOW()");
-        this.update(uw);
+        baseMapper.insertTodayByYesterday();
     }
 
 }

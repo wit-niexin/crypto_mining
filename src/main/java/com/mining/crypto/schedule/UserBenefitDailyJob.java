@@ -22,10 +22,13 @@ public class UserBenefitDailyJob {
      * 每天 01:00:00 执行
      * 秒 分 时 日 月 星期
      */
-    @Scheduled(cron = "0 0 1 * * ?")
+    @Scheduled(cron = "5 0 0 * * ?")
     public void run() {
+        // 1、刷新每天新增的收益
         userBenefitService.incrDaysAndRefreshCumulative();
+        // 2、刷新钱包的流水记录
         userBenefitService.pushDailyReturnToWallet(new Date());
+        // 3、刷新用户数据统计面板
         userDashboardService.refreshAllDashboard();
 
     }

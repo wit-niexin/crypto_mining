@@ -8,4 +8,6 @@ public interface UserDashboardMapper extends BaseMapper<UserDashboard> {
 
     UserDashboard selectByUserName(@Param("user_name") String name);
 
+    void insertTodayByYesterday();
+
 }

@@ -9,6 +9,36 @@
 
     <select id="selectByUserName" resultType="UserDashboard">
         <include refid="selectUserDashboard"/>
-        WHERE u.user_name = #{user_name} and u.del = 0
+        WHERE u.user_name = #{user_name}
+        AND u.del = 0
+        AND DATE(modify_date) = CURDATE()
     </select>
+
+    <insert id="insertTodayByYesterday">
+        INSERT INTO user_dashboard
+        (id,
+         user_name,
+         total_profit,
+         today_profit,
+         annualized_return,
+         wallet_balance,
+         create_date,
+         modifier,
+         modify_date,
+         del)
+        SELECT
+            REPLACE(UUID(), '-', '')          AS id,
+            user_name,
+            total_profit + today_profit       AS total_profit,
+            today_profit,
+            annualized_return,
+            wallet_balance + today_profit     AS wallet_balance,
+            NOW()                             AS create_date,
+            modifier,
+            NOW()                             AS modify_date,
+            0                                 AS del
+        FROM user_dashboard
+        WHERE del = 0
+          AND DATE(modify_date) = CURDATE() - INTERVAL 1 DAY
+    </insert>
 </mapper>
