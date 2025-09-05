@@ -7,11 +7,18 @@
         FROM user_dashboard u
     </sql>
 
-    <select id="selectByUserName" resultType="UserDashboard">
+    <select id="selectByUserNameToday" resultType="UserDashboard">
         <include refid="selectUserDashboard"/>
-        WHERE u.user_name = #{user_name}
+        WHERE u.user_name = #{name}
         AND u.del = 0
         AND DATE(modify_date) = CURDATE()
+    </select>
+
+    <select id="selectByUserName" resultType="UserDashboard">
+        <include refid="selectUserDashboard"/>
+        WHERE u.user_name = #{name}
+        AND u.del = 0
+        ORDER BY modify_date DESC
     </select>
 
     <insert id="insertTodayByYesterday">
