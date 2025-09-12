@@ -1,6 +1,8 @@
 spring:
   application:
     name: crypto_mining
+  profiles:
+    active: docker  # 激活 docker 环境的配置
 
   datasource:
     url: jdbc:mysql://121.40.215.191:3306/mining?useSSL=false&useUnicode=true&characterEncoding=UTF-8
